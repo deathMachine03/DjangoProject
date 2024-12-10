@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книги</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Стили для страницы книг */
+        body { background-color: #f0f0f0; color: #333; }
+        .navbar { background-color: #333; }
+        .navbar-brand, .navbar-nav .nav-link { color: #fff; }
+        .navbar-brand:hover, .navbar-nav .nav-link:hover { color: #ddd; }
+        .main-section { padding: 50px 0; }
+        .card { margin-bottom: 20px; }
+        .card-title { font-weight: bold; }
+        .footer { background-color: #333; color: #a5a5a5; padding: 20px 0; text-align: center; }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">Книги</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/books/">Книги</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="main-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Список книг</h2>
+            <div class="row">
+                {% for book in books %}
+                    <div class="col-md-4">
+                        <div class="card shadow-sm">
+                            <a href="{% url 'book_detail' book.id %}" class="text-decoration-none text-dark">
+                                <img src="{{ book.cover_url }}" class="card-img-top" alt="{{ book.title }}">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ book.title }}</h5>
+                                    <p class="card-text"><strong>Автор:</strong> {{ book.author }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2023 Сайт с книгами. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <!-- Подключение JavaScript для Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

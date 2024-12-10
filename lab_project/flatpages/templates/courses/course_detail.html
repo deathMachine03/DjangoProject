@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ course.title }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Мой сайт</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'course_list' %}">Курсы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'books' %}">Книги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'tests' %}">Тесты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Контент страницы -->
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">{{ course.title }}</h2>
+        <div class="row">
+            <div class="col-md-6">
+                {% if course.image %}
+                <img src="{{ course.image.url }}" alt="{{ course.title }}" class="img-fluid mb-3">
+                {% else %}
+                <img src="https://via.placeholder.com/300" alt="{{ course.title }}" class="img-fluid mb-3">
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <p>{{ course.description }}</p>
+                <p><strong>Цена:</strong> {{ course.price }} $.</p>
+                <a href="{% url 'add_to_cart' course.id %}" class="btn btn-primary">Добавить в корзину</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подвал -->
+    <footer class="footer mt-auto py-3 bg-dark text-white text-center">
+        <div class="container">
+            <span>&copy; 2023 Мой сайт. Все права защищены.</span>
+        </div>
+    </footer>
+
+    <!-- Скрипты Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

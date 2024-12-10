@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.title }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>{{ book.title }}</h2>
+        <p><strong>Автор:</strong> {{ book.author }}</p>
+        <p>{{ book.description }}</p>
+        <img src="{{ book.cover_url }}" alt="{{ book.title }}" class="img-fluid mb-3">
+        
+        {% if book.pdf_url %}
+            <h3>Читать книгу:</h3>
+            <div class="embed-responsive embed-responsive-16by9 mb-3">
+                <iframe class="embed-responsive-item" src="{{ book.pdf_url }}" allowfullscreen></iframe>
+            </div>
+        {% else %}
+            <p>Текст книги не доступен в формате PDF.</p>
+        {% endif %}
+        
+        <a href="{% url 'books' %}" class="btn btn-secondary">Вернуться к списку книг</a>
+    </div>
+</body>
+</html>

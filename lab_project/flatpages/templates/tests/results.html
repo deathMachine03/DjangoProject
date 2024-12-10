@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты теста</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+        .wrong-answer {
+            color: red;
+            font-weight: bold;
+        }
+        .feedback {
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Результаты теста</h2>
+        <p>Вы набрали {{ score }} из {{ total }} правильных ответов.</p>
+
+        <hr>
+
+        <h3>Детали теста</h3>
+        <div>
+            {% for result in results %}
+                <div class="mb-4">
+                    <h5>{{ result.question }}</h5>
+                    <ul>
+                        <li class="{% if result.correct == 1 %}correct-answer{% elif result.selected == 1 and result.correct != 1 %}wrong-answer{% endif %}">
+                            {{ result.options.1 }}
+                            {% if result.correct == 1 %} (Правильный ответ){% elif result.selected == 1 and result.correct != 1 %} (Ваш ответ){% endif %}
+                        </li>
+                        <li class="{% if result.correct == 2 %}correct-answer{% elif result.selected == 2 and result.correct != 2 %}wrong-answer{% endif %}">
+                            {{ result.options.2 }}
+                            {% if result.correct == 2 %} (Правильный ответ){% elif result.selected == 2 and result.correct != 2 %} (Ваш ответ){% endif %}
+                        </li>
+                        <li class="{% if result.correct == 3 %}correct-answer{% elif result.selected == 3 and result.correct != 3 %}wrong-answer{% endif %}">
+                            {{ result.options.3 }}
+                            {% if result.correct == 3 %} (Правильный ответ){% elif result.selected == 3 and result.correct != 3 %} (Ваш ответ){% endif %}
+                        </li>
+                        <li class="{% if result.correct == 4 %}correct-answer{% elif result.selected == 4 and result.correct != 4 %}wrong-answer{% endif %}">
+                            {{ result.options.4 }}
+                            {% if result.correct == 4 %} (Правильный ответ){% elif result.selected == 4 and result.correct != 4 %} (Ваш ответ){% endif %}
+                        </li>
+                    </ul>
+                    {% if not result.is_correct %}
+                        <p class="feedback">Ваш ответ был неверным. Правильный ответ: {{ result.correct_answer_text }}.</p>
+                    {% else %}
+                        <p class="feedback">Поздравляем! Вы ответили правильно.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <a href="{% url 'tests' %}" class="btn btn-primary">Пройти тест снова</a>
+    </div>
+</body>
+</html>

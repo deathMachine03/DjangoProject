@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваша корзина</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Мой сайт</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'course_list' %}">Курсы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'books' %}">Книги</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'tests' %}">Тесты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Содержимое корзины -->
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Ваша корзина</h2>
+        <div class="cart-items">
+            {% if cart.items.all %}
+                {% for item in cart.items.all %}
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">{{ item.course.title }}</h4>
+                        <p class="card-text">Количество: {{ item.quantity }}</p>
+                        <p class="card-text">Цена за единицу: {{ item.course.price }} $</p>
+                        <p class="card-text">Общая цена: <strong>{{ item.get_total_price }} $</strong></p>
+                        <a href="{% url 'purchase_course' item.course.id %}" class="btn btn-success">Купить</a> <!-- Кнопка покупки -->
+                        <a href="{% url 'clear_cart' %}" class="btn btn-danger">Очистить корзину</a>
+                    </div>
+                </div>
+                {% endfor %}
+                <p class="text-right font-weight-bold">Общая стоимость: {{ total_price }} $</p>
+            {% else %}
+                <p class="text-center">Ваша корзина пуста.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Подвал -->
+    <footer class="footer mt-auto py-3 bg-dark text-white text-center">
+        <div class="container">
+            <span>&copy; 2023 Мой сайт. Все права защищены.</span>
+        </div>
+    </footer>
+
+    <!-- Скрипты Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

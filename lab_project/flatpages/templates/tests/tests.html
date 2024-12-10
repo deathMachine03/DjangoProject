@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесты по Django</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Тесты по Django</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for test in tests %}
+                <div class="mb-4">
+                    <h5>{{ test.question }}</h5>
+                    <div>
+                        <input type="radio" name="question_{{ test.id }}" value="1"> {{ test.option1 }}<br>
+                        <input type="radio" name="question_{{ test.id }}" value="2"> {{ test.option2 }}<br>
+                        <input type="radio" name="question_{{ test.id }}" value="3"> {{ test.option3 }}<br>
+                        <input type="radio" name="question_{{ test.id }}" value="4"> {{ test.option4 }}
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Отправить ответы</button>
+        </form>
+    </div>
+</body>
+</html>

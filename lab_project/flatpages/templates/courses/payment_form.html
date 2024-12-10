@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оплата курса</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Оплата курса: {{ course.title }}</h2>
+        <p>Стоимость: {{ course.price }} $</p>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="card_number">Номер карты:</label>
+                <input type="text" id="card_number" name="card_number" class="form-control" placeholder="Введите номер карты" required>
+            </div>
+            <div class="form-group">
+                <label for="expiration_date">Срок действия:</label>
+                <input type="text" id="expiration_date" name="expiration_date" class="form-control" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV:</label>
+                <input type="password" id="cvv" name="cvv" class="form-control" placeholder="Введите CVV" required>
+            </div>
+            <button type="submit" class="btn btn-success">Оплатить</button>
+            <a href="{% url 'cart_detail' %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+</body>
+</html>

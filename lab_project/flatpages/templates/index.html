@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+    <style>
+        /* Стили для улучшения дизайна */
+        .jumbotron {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+        }
+        .jumbotron-heading {
+            font-weight: bold;
+            font-size: 3rem;
+        }
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .carousel-background {
+            background-image: url('https://example.com/your-image.jpg'); /* Замените на URL вашего изображения */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 30px;
+            border-radius: 10px;
+            position: relative;
+            margin-top: 20px;
+        }
+        /* Полупрозрачный оверлей для затемнения */
+        .carousel-background::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Прозрачность затемнения */
+            border-radius: 10px;
+        }
+        .carousel-item h5 {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            color: #fff;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .carousel-item p {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            color: #fff;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .carousel-item .embed-responsive {
+            position: relative;
+            z-index: 1;
+        }
+        .carousel-caption h5, .carousel-caption p {
+            z-index: 2;
+            position: relative;
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: #333;
+            border-radius: 50%;
+            padding: 10px;
+        }
+        footer {
+            background-color: #2c2c2c;
+        }
+        footer p, footer a {
+            color: #b3b3b3;
+        }
+        footer a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигационный бар -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'home' %}">Мой Сайт</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/books/">Книги</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/">Админ-панель</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tests/">Тесты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/courses/">Курсы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart/">Корзина</a>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Баннер -->
+    <section class="jumbotron text-center">
+        <div class="container">
+            <h1 class="jumbotron-heading">Добро пожаловать на наш сайт!</h1>
+            <p class="lead">Читайте самые актуальные статьи и узнавайте новости первыми.</p>
+        </div>
+    </section>
+
+    <!-- Секция уроков с каруселью -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Наши уроки</h2>
+        <div id="lessonCarousel" class="carousel slide carousel-background" data-ride="carousel">
+            <div class="carousel-inner">
+                {% for lesson in lessons %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="{{ lesson.video_url|add:'?rel=0' }}" allowfullscreen></iframe>
+                        </div>
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{ lesson.title }}</h5>
+                            <p>{{ lesson.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#lessonCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Предыдущий</span>
+            </a>
+            <a class="carousel-control-next" href="#lessonCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Следующий</span>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Футер -->
+    <footer class="text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2023 Мой Сайт. Все права защищены.</p>
+            <p>Контакты: info@example.com</p>
+            <div>
+                <a href="#" class="text-white mr-3">Facebook</a>
+                <a href="#" class="text-white mr-3">Twitter</a>
+                <a href="#" class="text-white">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение JavaScript для Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
